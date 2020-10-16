@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--This is how you comment for html-->
+<html lang="en" dir="ltr">
+<head>
+  .mapboxgl-popup {
+max-width: 400px;
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif}
+  <meta charset="utf-8">
+   <title> Instances of Artistic Dissent </title>
+   <!--This where you put all your dependencies-->
+   <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+   <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+   <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+  <div id='map' style='width: 600px; height: 400px;'></div>
+   <script>
+   mapboxgl.accessToken = 'pk.eyJ1IjoiamFuZXRsZSIsImEiOiJja2ZuNnlzbWkxYzY0MzVtcWxkaDkxaHZwIn0.hejoMbHnvUCD_FS6KTWGoA';
+
+   //Call in your Map
+   var map = new mapboxgl.Map({
+     container: 'map',
+     style: 'mapbox://styles/janetle/ckgcpctyq030619paq889wjtj',
+     center: [-122.25, 37.87], // starting position [lng, lat]
+     zoom: 12 // starting zoom
+  });
+  // Initialize the geolocate control.
+var geolocate = new mapboxgl.GeolocateControl({
+positionOptions: {
+enableHighAccuracy: true
+},
+trackUserLocation: true
+});
+// Add the control to the map.
+map.addControl(geolocate);
+map.on('load', function() {
+geolocate.trigger();
+
+map.addSource('places', {
+'type': 'geojson',
+'data': {
+  'type': 'FeatureCollection',
+  'features': [
+    {
+      'type': 'Feature',
+      'properties': {
+        'title': 'Artist and Craftsman',
+        'description': 'Storefront posters'
+      },
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [
+          -122.26684,
+          37.862658
+        ]
+      }
+    },
+    {
+      'type': 'Feature',
+      'properties': {
+        'title': 'Stop sign commercial',
+        'description': 'Destroy Fascism sticker'
+      },
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [
+          -122.26682,
+          37.860434
+        ]
+      }
+    },
+    {
+      'type': 'Feature',
+      'properties': {
+        'title': 'Empty lot fence',
+        'description': 'Indigenous self-determination poster'
+      },
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [
+          -122.26688,
+          37.860029
+        ]
+      }
+    },
+    {
+      'type': 'Feature',
+      'properties': {
+        'title': 'Sidewalk commercial',
+        'description': 'FTP stencil'
+      },
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [
+          -122.26689,
+          37.859677
+        ]
+      }
+    },
+    {
+      'type': 'Feature',
+      'properties': {
+        'title': 'Sidewalk Berkeley bowl',
+        'description': 'Trump/Pence out now, Say their names stencils'
+      },
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [
+          -122.26788,
+          37.857329
+        ]
+      }
+    },
+    {
+      'type': 'Feature',
+      'properties': {
+        'title': 'Light pole residential',
+        'description': 'Dismantle oppression posters'
+      },
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [
+          -122.27171,
+          37.85064
+          ]
+                }
+              }
+            ]
+          }
+});
+// Add a layer 1 showing the places.
+map.addLayer({
+'id': 'places',
+'type': 'symbol',
+'source': 'places',
+'layout': {
+'icon-image': 'dot-11',
+'icon-allow-overlap': true
+}
+});
+map.on('click', 'places', function(e) {
+var coordinates = e.features[0].geometry.coordinates.slice();
+var description = e.features[0].properties.description;
+
+new mapboxgl.Popup()
+.setLngLat(coordinates)
+.setHTML(description)
+.addTo(map);
+});
+});
+   </script>
+</body>
+</html>
